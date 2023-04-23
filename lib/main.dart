@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart' show timeDilation;
 
 void main() {
   MyApp app = MyApp();
@@ -29,6 +30,8 @@ class MyFormWidget extends StatefulWidget {
 class MyFormWidgetState extends State<MyFormWidget> {
   final formKey = GlobalKey<FormState>();
   double currentSliderValue = 18;
+  List<bool?> checkBoxesValues = [false, false, false, false];
+  RadioBoxOptions? radioBoxGroup= RadioBoxOptions.nao;
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +53,7 @@ class MyFormWidgetState extends State<MyFormWidget> {
           ),
           TextFormField(
             decoration: const InputDecoration(
-              hintText: 'CPF:',
+              hintText: 'Telefone:',
             ),
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -59,6 +62,7 @@ class MyFormWidgetState extends State<MyFormWidget> {
               return null;
             }
           ),
+          Text('Idade'),
           Slider(
             value: currentSliderValue,
             min: 18,
@@ -70,9 +74,73 @@ class MyFormWidgetState extends State<MyFormWidget> {
                 currentSliderValue = value;
               });
             },
+          ),
+          Text('Monte seu almoço'),
+          CheckboxListTile(
+            title: Text('Arroz'),
+            value: checkBoxesValues[0], 
+            onChanged: (bool? value) {
+              setState(() {
+                checkBoxesValues[0] = value;
+              });
+            },
+            controlAffinity: ListTileControlAffinity.leading,
+          ),
+          CheckboxListTile(
+            title: Text('Feijão'),
+            value: checkBoxesValues[1], 
+            onChanged: (bool? value) {
+              setState(() {
+                checkBoxesValues[1] = value;
+              });
+            },
+            controlAffinity: ListTileControlAffinity.leading,
+          ),
+          CheckboxListTile(
+            title: Text('Frango'),
+            value: checkBoxesValues[2], 
+            onChanged: (bool? value) {
+              setState(() {
+                checkBoxesValues[2] = value;
+              });
+            },
+            controlAffinity: ListTileControlAffinity.leading,
+          ),
+          CheckboxListTile(
+            title: Text('Salada'),
+            value: checkBoxesValues[3], 
+            onChanged: (bool? value) {
+              setState(() {
+                checkBoxesValues[3] = value;
+              });
+            },
+            controlAffinity: ListTileControlAffinity.leading,
+          ),
+          Text('Vai querer sobremesa?'),
+          RadioListTile(
+            title: Text('Sim'),
+            value: RadioBoxOptions.sim, 
+            groupValue: radioBoxGroup, 
+            onChanged: (RadioBoxOptions? value) {
+              setState(() {
+                radioBoxGroup = value;
+              });
+            },
+          ),
+          RadioListTile(
+            title: Text('Não'),
+            value: RadioBoxOptions.nao, 
+            groupValue: radioBoxGroup, 
+            onChanged: (RadioBoxOptions? value) {
+              setState(() {
+                radioBoxGroup = value;
+              });
+            },
           )
         ],
       )
     );
   }
 }
+
+enum RadioBoxOptions {sim, nao}
